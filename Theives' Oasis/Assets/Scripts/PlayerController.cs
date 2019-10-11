@@ -5,16 +5,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Rigidbody2D rb;
     public float moveSpeed;
     public float crouchSpeed;
     public float currentSpeed;
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        rb.freezeRotation = true;
         currentSpeed = moveSpeed;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -27,20 +30,20 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(0, currentSpeed, 0);
+            transform.Translate(0, moveSpeed, 0);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(0, -currentSpeed, 0);
+            transform.Translate(0, -moveSpeed, 0);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(currentSpeed, 0, 0);
+            transform.Translate(moveSpeed, 0, 0);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(-currentSpeed, 0, 0);
+            transform.Translate(-moveSpeed, 0, 0);
         }
     }
 }
