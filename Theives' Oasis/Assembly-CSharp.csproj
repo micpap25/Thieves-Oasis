@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Owner/Documents/GitHub/Thieves-Oasis/Theives' Oasis/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
