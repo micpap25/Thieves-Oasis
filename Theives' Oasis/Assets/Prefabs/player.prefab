@@ -182,7 +182,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   moveSpeed: 0.2
   crouchSpeed: 0.1
-  currentSpeed: 0
+  rollSpeed: 0
 --- !u!58 &2600166970692563574
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -219,4 +219,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4

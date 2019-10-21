@@ -9,10 +9,33 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] private float degreeToPlayer;
     [SerializeField] private float distanceFromPlayer;
     [SerializeField] private GameObject player;
+    public Transform[] points;
+    public float degreeToPoint;
+    public int timeBetweenPoints;
+    public int curPoint;
+    public Vector2 movementToNextPoint;
+    
+    //degree facing has up-right as 0
+    //always adjust so they face the direction they're moving
+    // (unless they're drunk which they very well might be)
+
     void Start()
     {
+        
         degreeFacing = 0;
         player = GameObject.FindGameObjectWithTag("Player");
+        if (points[0] != null)
+        {
+            curPoint = 0;
+            movementToNextPoint = new Vector2((points[curPoint].position.x - transform.position.x) / timeBetweenPoints, (points[curPoint].position.y - transform.position.y) / timeBetweenPoints);
+            degreeFacing = Vector3.SignedAngle(points[curPoint].position - transform.position, transform.position, Vector3.forward);
+            //transform.LookAt(points[curPoint]);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(points[curPoint].position - transform.position), Time.deltaTime);
+            transform.rotation = Quaternion.Euler(0, 0, degreeFacing);
+
+        }
+        else
+            degreeFacing = 45;
     }
 
     // Update is called once per frame
@@ -42,6 +65,23 @@ public class EnemyBehavior : MonoBehaviour
                 Debug.Log("ALERT ALERT");
             }
         }
+        if (points[0] != null) {
+            if (!(this.transform.position.x > (points[curPoint].position.x) - .5 && this.transform.position.x < (points[curPoint].position.x) + .5 && this.transform.position.y > (points[curPoint].position.y) - .5 && this.transform.position.y < (points[curPoint].position.y) + .5))
+            {
+                //gameObject.transform.Translate(movementToNextPoint.x, movementToNextPoint.y, 0);
+                transform.position = new Vector3(transform.position.x + movementToNextPoint.x, transform.position.y + movementToNextPoint.y, 0);
+            }
+            else
+            {
+                curPoint = (curPoint + 1) % points.Length;
+                movementToNextPoint = new Vector2((points[curPoint].position.x - transform.position.x) / timeBetweenPoints, (points[curPoint].position.y - transform.position.y) / timeBetweenPoints);
+                degreeFacing = Vector3.SignedAngle(points[curPoint].position - transform.position, transform.position, Vector3.forward);
+                //transform.LookAt(points[curPoint]);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(points[curPoint].position - transform.position), Time.deltaTime);
+                transform.rotation = Quaternion.Euler(0, 0, degreeFacing);
+            }
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
