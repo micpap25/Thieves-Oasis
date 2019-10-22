@@ -9,65 +9,103 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float crouchSpeed;
     public float rollSpeed;
+    public GameObject bar;
+    public Vector3 temp;
 
     private float currentSpeed;
     private bool roll;
     private int rollStart;
+    private char currdiV;
+    private char currdiH;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
         currentSpeed = moveSpeed;
         roll = false;
+        currdiV = 'w';
+        currdiH = 'n';
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        
 
-        if (!roll)
+        
+        if (roll && Time.frameCount - rollStart < 10)
         {
+            temp.x = 0;
+
+            if (currdiV == 'w')
+            {
+                transform.Translate(0, rollSpeed, 0);
+            }
+            else if (currdiV == 's')
+            {
+                transform.Translate(0, -rollSpeed, 0);
+            }
+
+            if (currdiH == 'd')
+            {
+                transform.Translate(rollSpeed, 0, 0);
+            }
+            else if (currdiH == 'a')
+            {
+                transform.Translate(-rollSpeed, 0, 0);
+            }
+        }
+        else
+        {
+            temp = bar.transform.localScale;
+            temp.x += 1f;
+            
+            roll = false;
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 currentSpeed = crouchSpeed;
             }
-
-            else if (Input.GetKeyDown(KeyCode.Tab) && Time.frameCount-rollStart>=60)
-            {
-                currentSpeed = rollSpeed;
-                roll = true;
-                rollStart = Time.frameCount;
-            }
-
             else
             {
                 currentSpeed = moveSpeed;
             }
-        }
 
-        if (roll && Time.frameCount - rollStart >= 10)
-        {
-            currentSpeed = moveSpeed;
-            roll = false;
-        }
+            if (Input.GetKeyDown(KeyCode.Space) && Time.frameCount - rollStart >= 60)
+            {
+                rollStart = Time.frameCount;
+                roll = true;
+            }
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(0, currentSpeed, 0);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(0, -currentSpeed, 0);
-        }
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.Translate(0, currentSpeed, 0);
+                currdiV = 'w';
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                transform.Translate(0, -currentSpeed, 0);
+                currdiV = 's';
+            }
+            else
+            {
+                currdiV = 'n';
+            }
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(currentSpeed, 0, 0);
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.Translate(currentSpeed, 0, 0);
+                currdiH = 'd';
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                transform.Translate(-currentSpeed, 0, 0);
+                currdiH = 'a';
+            }
+            else
+            {
+                currdiH = 'n';
+            }
         }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(-currentSpeed, 0, 0);
-        }
+        bar.transform.localScale = temp;
     }
 }
