@@ -144,7 +144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 229653268}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11, y: 35, z: 0}
+  m_LocalPosition: {x: 11, y: 25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -174,7 +174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325116411}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44, y: 21, z: 0}
+  m_LocalPosition: {x: 44, y: 25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -210,14 +210,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003359225}
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 4.72, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.92387956, w: 0.38268343}
+  m_LocalPosition: {x: 3.9, y: 3.8, z: 0}
   m_LocalScale: {x: 0.35676426, y: 0.3754629, z: 0.32140923}
   m_Children:
   - {fileID: 1442671792}
   m_Father: {fileID: 552710281}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 135}
 --- !u!212 &1003359227
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   - {fileID: 229653269}
   - {fileID: 325116412}
   degreeToPoint: 0
-  timeBetweenPoints: 120
+  timeBetweenPoints: 240
   curPoint: 0
   movementToNextPoint: {x: 0, y: 0}
 --- !u!50 &1145918305
@@ -530,7 +530,7 @@ PrefabInstance:
     - target: {fileID: 2600166970692563568, guid: 405b8b84bc99ac44dabdbfd8eaea355e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 31.8
+      value: 15.58
       objectReference: {fileID: 0}
     - target: {fileID: 2600166970692563568, guid: 405b8b84bc99ac44dabdbfd8eaea355e,
         type: 3}

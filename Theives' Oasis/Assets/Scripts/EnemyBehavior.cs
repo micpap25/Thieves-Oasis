@@ -21,28 +21,29 @@ public class EnemyBehavior : MonoBehaviour
 
     void Start()
     {
-        
         degreeFacing = 0;
         player = GameObject.FindGameObjectWithTag("Player");
         if (points[0] != null)
         {
             curPoint = 0;
+            //movementToNextPoint = new Vector2(Mathf.Sqrt(Mathf.Pow(points[curPoint].position.x, 2) - Mathf.Pow(transform.position.x, 2)) / timeBetweenPoints, Mathf.Sqrt(Mathf.Pow(points[curPoint].position.y, 2) - Mathf.Pow(transform.position.y, 2)) / timeBetweenPoints);
             movementToNextPoint = new Vector2((points[curPoint].position.x - transform.position.x) / timeBetweenPoints, (points[curPoint].position.y - transform.position.y) / timeBetweenPoints);
-            degreeFacing = Vector3.SignedAngle(points[curPoint].position - transform.position, transform.position, Vector3.forward);
+            degreeFacing = Vector3.SignedAngle(transform.position, points[curPoint].position - transform.position, Vector3.forward);
+            //degreeFacing = degreeFacing < -135 ? degreeFacing += 315 : degreeFacing -= 45;
             //transform.LookAt(points[curPoint]);
             //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(points[curPoint].position - transform.position), Time.deltaTime);
             transform.rotation = Quaternion.Euler(0, 0, degreeFacing);
 
         }
-        else
-            degreeFacing = 45;
+        //else
+        //    degreeFacing = -45;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         distanceFromPlayer = Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2) + Mathf.Pow(transform.position.y - player.transform.position.y, 2));
-        degreeToPlayer = Vector3.SignedAngle(player.transform.position - transform.position, transform.position, Vector3.forward);
+        degreeToPlayer = Vector3.SignedAngle(transform.position, player.transform.position - transform.position, Vector3.forward);
         if (degreeFacing > 160)
         {
             if(degreeToPlayer > degreeFacing - 20 && degreeToPlayer < degreeFacing - 340 && distanceFromPlayer < 10)
@@ -75,7 +76,8 @@ public class EnemyBehavior : MonoBehaviour
             {
                 curPoint = (curPoint + 1) % points.Length;
                 movementToNextPoint = new Vector2((points[curPoint].position.x - transform.position.x) / timeBetweenPoints, (points[curPoint].position.y - transform.position.y) / timeBetweenPoints);
-                degreeFacing = Vector3.SignedAngle(points[curPoint].position - transform.position, transform.position, Vector3.forward);
+                degreeFacing = Vector3.SignedAngle(transform.position, points[curPoint].position - transform.position, Vector3.forward);
+                //degreeFacing = degreeFacing < -135 ? degreeFacing += 315 : degreeFacing -= 45;
                 //transform.LookAt(points[curPoint]);
                 //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(points[curPoint].position - transform.position), Time.deltaTime);
                 transform.rotation = Quaternion.Euler(0, 0, degreeFacing);
