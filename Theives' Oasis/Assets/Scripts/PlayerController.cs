@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float crouchSpeed;
     public float rollSpeed;
-    public GameObject bar;
+    //public GameObject bar;
     public Vector3 temp;
 
     private float currentSpeed;
@@ -57,8 +57,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            temp = bar.transform.localScale;
-            temp.x += 1f;
+       //     temp = bar.transform.localScale;
+       //     temp.x += 1f;
             
             roll = false;
             if (Input.GetKey(KeyCode.LeftShift))
@@ -106,6 +106,6 @@ public class PlayerController : MonoBehaviour
                 currdiH = 'n';
             }
         }
-        bar.transform.localScale = temp;
+       // bar.transform.localScale = temp;
     }
 }

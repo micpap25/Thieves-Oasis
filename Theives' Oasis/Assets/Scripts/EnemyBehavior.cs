@@ -10,9 +10,9 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] private float distanceFromPlayer;
     [SerializeField] private GameObject player;
     public Transform[] points;
-    public float degreeToPoint;
     public int timeBetweenPoints;
     public int curPoint;
+    public int nextPoint;
     public Vector2 movementToNextPoint;
     
     //degree facing has up-right as 0
@@ -32,7 +32,7 @@ public class EnemyBehavior : MonoBehaviour
             //degreeFacing = degreeFacing < -135 ? degreeFacing += 315 : degreeFacing -= 45;
             //transform.LookAt(points[curPoint]);
             //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(points[curPoint].position - transform.position), Time.deltaTime);
-            transform.rotation = Quaternion.Euler(0, 0, degreeFacing);
+            transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
 
         }
         //else
@@ -67,20 +67,23 @@ public class EnemyBehavior : MonoBehaviour
             }
         }
         if (points[0] != null) {
-            if (!(this.transform.position.x > (points[curPoint].position.x) - .5 && this.transform.position.x < (points[curPoint].position.x) + .5 && this.transform.position.y > (points[curPoint].position.y) - .5 && this.transform.position.y < (points[curPoint].position.y) + .5))
+            if (!(this.transform.position.x > (points[curPoint].position.x) - .05 && this.transform.position.x < (points[curPoint].position.x) + .05 && this.transform.position.y > (points[curPoint].position.y) - .05 && this.transform.position.y < (points[curPoint].position.y) + .05))
             {
                 //gameObject.transform.Translate(movementToNextPoint.x, movementToNextPoint.y, 0);
                 transform.position = new Vector3(transform.position.x + movementToNextPoint.x, transform.position.y + movementToNextPoint.y, 0);
+                degreeFacing = Vector3.SignedAngle(transform.position, points[nextPoint].position - transform.position, Vector3.forward);
+                transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
             }
             else
             {
-                curPoint = (curPoint + 1) % points.Length;
-                movementToNextPoint = new Vector2((points[curPoint].position.x - transform.position.x) / timeBetweenPoints, (points[curPoint].position.y - transform.position.y) / timeBetweenPoints);
-                degreeFacing = Vector3.SignedAngle(transform.position, points[curPoint].position - transform.position, Vector3.forward);
-                //degreeFacing = degreeFacing < -135 ? degreeFacing += 315 : degreeFacing -= 45;
-                //transform.LookAt(points[curPoint]);
-                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(points[curPoint].position - transform.position), Time.deltaTime);
-                transform.rotation = Quaternion.Euler(0, 0, degreeFacing);
+                //factoring the angle it came into the point into its new rotation in some way
+                degreeFacing = 0;
+                transform.position = points[curPoint].position;
+                nextPoint = (curPoint + 1) % points.Length;
+                movementToNextPoint = new Vector2((points[nextPoint].position.x - transform.position.x) / timeBetweenPoints, (points[nextPoint].position.y - transform.position.y) / timeBetweenPoints);
+                degreeFacing = Vector3.SignedAngle(transform.position, points[nextPoint].position - transform.position, Vector3.forward);
+                transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
+                curPoint = nextPoint;
             }
         }
         
