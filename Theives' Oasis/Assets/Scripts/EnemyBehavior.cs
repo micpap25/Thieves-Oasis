@@ -46,7 +46,7 @@ public class EnemyBehavior : MonoBehaviour
         degreeToPlayer = Vector3.SignedAngle(transform.position, player.transform.position - transform.position, Vector3.forward);
         if (degreeFacing > 160)
         {
-            if(degreeToPlayer > degreeFacing - 20 && degreeToPlayer < degreeFacing - 340 && distanceFromPlayer < 10)
+            if (degreeToPlayer > degreeFacing - 20 && degreeToPlayer < degreeFacing - 340 && distanceFromPlayer < 10)
             {
                 Debug.Log("ALERT ALERT");
             }
@@ -58,7 +58,7 @@ public class EnemyBehavior : MonoBehaviour
                 Debug.Log("ALERT ALERT");
             }
         }
-            
+
         else
         {
             if (degreeToPlayer > degreeFacing - 20 && degreeToPlayer < degreeFacing + 20 && distanceFromPlayer < 10)
@@ -66,7 +66,8 @@ public class EnemyBehavior : MonoBehaviour
                 Debug.Log("ALERT ALERT");
             }
         }
-        if (points[0] != null) {
+        if (points[0] != null)
+        {
             if (!(this.transform.position.x > (points[curPoint].position.x) - .05 && this.transform.position.x < (points[curPoint].position.x) + .05 && this.transform.position.y > (points[curPoint].position.y) - .05 && this.transform.position.y < (points[curPoint].position.y) + .05))
             {
                 //gameObject.transform.Translate(movementToNextPoint.x, movementToNextPoint.y, 0);
@@ -86,15 +87,6 @@ public class EnemyBehavior : MonoBehaviour
                 curPoint = nextPoint;
             }
         }
-        
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag.Equals("Player"))
-        {
-            //Destroy(collision.gameObject);
-            Debug.Log("Oof you're dead");
-        }
     }
 }

@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public float rollSpeed;
     //public GameObject bar;
     public Vector3 temp;
-
+    public bool hasObjective;
     private float currentSpeed;
     private bool roll;
     private int rollStart;
@@ -108,4 +108,28 @@ public class PlayerController : MonoBehaviour
         }
        // bar.transform.localScale = temp;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Enemy"))
+        {
+            //Destroy(collision.gameObject);
+            Debug.Log("Oof you're dead");
+        }
+        if (collision.gameObject.tag.Equals("Objective"))
+        {
+            hasObjective = true;
+            Destroy(collision.gameObject);
+            Debug.Log("You have the diamond! Now run!");
+        }
+
+        if (collision.gameObject.tag.Equals("Goal"))
+        {
+            if (hasObjective)
+                Debug.Log("You win!");
+            else
+                Debug.Log("No! You need the diamond!");
+        }
+    }
+
 }
