@@ -44,6 +44,8 @@ public class EnemyBehavior : MonoBehaviour
     {
         distanceFromPlayer = Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2) + Mathf.Pow(transform.position.y - player.transform.position.y, 2));
         degreeToPlayer = Vector3.SignedAngle(transform.position, player.transform.position - transform.position, Vector3.forward);
+        //These 2 sections are incorrect
+        //Fix angles and stuff
         if (degreeFacing > 160)
         {
             if (degreeToPlayer > degreeFacing - 20 && degreeToPlayer < degreeFacing - 340 && distanceFromPlayer < 10)
