@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float crouchSpeed;
     public float rollSpeed;
-    //public GameObject bar;
     public Vector3 temp;
 
     private float currentSpeed;
@@ -54,11 +53,11 @@ public class PlayerController : MonoBehaviour
             {
                 transform.Translate(-rollSpeed, 0, 0);
             }
+
         }
         else
         {
-       //     temp = bar.transform.localScale;
-       //     temp.x += 1f;
+
             
             roll = false;
             if (Input.GetKey(KeyCode.LeftShift))
