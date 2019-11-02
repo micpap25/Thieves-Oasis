@@ -131,4 +131,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Vent") && Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            transform.position = collision.gameObject.GetComponent<VentInfo>().telePoint;
+        }
+    }
+
 }
