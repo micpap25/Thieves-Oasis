@@ -6,14 +6,9 @@ public class EnemyBehavior : MonoBehaviour
 {
     // Start is called before the first frame update
     public float degreeFacing;
-    public float degreeLineOfSight;
-    public float distanceLineOfSight;
     [SerializeField] private float degreeToPlayer;
     [SerializeField] private float distanceFromPlayer;
     [SerializeField] private GameObject player;
-    public float tempAngle;
-    public bool playerSpotted;
-    public float playerSpottedSpeed;
     public Transform[] points;
     public int timeBetweenPoints;
     public int curPoint;
@@ -51,22 +46,28 @@ public class EnemyBehavior : MonoBehaviour
         degreeToPlayer = Vector3.SignedAngle(transform.position, player.transform.position - transform.position, Vector3.forward);
         //These 2 sections are incorrect
         //Fix angles and stuff
-
-        if (degreeToPlayer < -180 + degreeLineOfSight && degreeFacing > 180 - degreeLineOfSight)
-            degreeToPlayer += 360;
-        if (degreeFacing < -180 + degreeLineOfSight && degreeToPlayer > 180 - degreeLineOfSight)
-            degreeToPlayer -= 360;
-        if (degreeToPlayer > degreeFacing - degreeLineOfSight && degreeToPlayer < degreeFacing + degreeLineOfSight && distanceFromPlayer < distanceLineOfSight)         {
-            playerSpotted = true;
-        }
-        else
-            playerSpotted = false;
-
-        if (playerSpotted)
+        if (degreeFacing > 160)
         {
-            Debug.Log("ALERT ALERT ALERT");
+            if (degreeToPlayer > degreeFacing - 20 && degreeToPlayer < degreeFacing - 340 && distanceFromPlayer < 10)
+            {
+                Debug.Log("ALERT ALERT");
+            }
+        }
+        else if (degreeFacing < -160)
+        {
+            if (degreeToPlayer > degreeFacing + 340 && degreeToPlayer < degreeFacing + 20 && distanceFromPlayer < 10)
+            {
+                Debug.Log("ALERT ALERT");
+            }
         }
 
+        else
+        {
+            if (degreeToPlayer > degreeFacing - 20 && degreeToPlayer < degreeFacing + 20 && distanceFromPlayer < 10)
+            {
+                Debug.Log("ALERT ALERT");
+            }
+        }
         if (points[0] != null)
         {
             if (!(this.transform.position.x > (points[curPoint].position.x) - .05 && this.transform.position.x < (points[curPoint].position.x) + .05 && this.transform.position.y > (points[curPoint].position.y) - .05 && this.transform.position.y < (points[curPoint].position.y) + .05))
