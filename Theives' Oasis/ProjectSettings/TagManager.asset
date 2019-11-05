@@ -7,6 +7,7 @@ TagManager:
   - Objective
   - Enemy
   - Goal
+  - Vent
   layers:
   - Default
   - TransparentFX
