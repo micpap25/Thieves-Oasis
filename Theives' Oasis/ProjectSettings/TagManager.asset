@@ -42,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: SightIndicator
+    uniqueID: 189860089
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
