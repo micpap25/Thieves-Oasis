@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3680038475965788559}
   - component: {fileID: 3680038475965788558}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: enemy (no gun)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,6 +136,7 @@ MonoBehaviour:
   degreeFacing: 0
   degreeLineOfSight: 20
   distanceLineOfSight: 10
+  hasGun: 0
   degreeToPlayer: 0
   distanceFromPlayer: 0
   player: {fileID: 0}
@@ -220,8 +221,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 189860089
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6cf8056bae32bc044b660608d3516fab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -300,6 +301,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 135
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312921306275222719, guid: edf3788a43663f04eb02ecab32961d9c,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 189860089
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312921306275222719, guid: edf3788a43663f04eb02ecab32961d9c,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edf3788a43663f04eb02ecab32961d9c, type: 3}
