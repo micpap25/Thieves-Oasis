@@ -8,13 +8,19 @@ public class EnemyBehavior : MonoBehaviour
     public float degreeFacing;
     public float degreeLineOfSight;
     public float distanceLineOfSight;
+    public float distanceFollowing;
+    private float originalDegreeLineOfSight;
+    private float originalDistanceLineOfSight;
     public bool hasGun;
     [SerializeField] private float degreeToPlayer;
     [SerializeField] private float distanceFromPlayer;
+    [SerializeField] private float distanceFromNextPoint;
     [SerializeField] private GameObject player;
     public float tempAngle;
     public bool playerSpotted;
     public float playerSpottedSpeed;
+    public float playerSpottedDegreeLineOfSight;
+    public float playerSpottedDistanceLineOfSight;
     public Transform[] points;
     public int timeBetweenPoints;
     public int curPoint;
@@ -28,7 +34,8 @@ public class EnemyBehavior : MonoBehaviour
 
     void Start()
     {
-        degreeFacing = 0;
+        originalDegreeLineOfSight = degreeLineOfSight;
+        originalDistanceLineOfSight = distanceLineOfSight;
         player = GameObject.FindGameObjectWithTag("Player");
         if (points[0] != null)
         {
@@ -45,6 +52,9 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        distanceLineOfSight = playerSpotted ? playerSpottedDistanceLineOfSight : originalDistanceLineOfSight;
+        degreeLineOfSight = playerSpotted ? playerSpottedDegreeLineOfSight : originalDegreeLineOfSight;
+        distanceFromNextPoint = Mathf.Sqrt(Mathf.Pow(transform.position.x - points[curPoint].transform.position.x, 2) + Mathf.Pow(transform.position.y - points[curPoint].transform.position.y, 2));
         distanceFromPlayer = Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2) + Mathf.Pow(transform.position.y - player.transform.position.y, 2));
         degreeToPlayer = Vector2.SignedAngle(transform.position, player.transform.position - transform.position);
         //These 2 sections are incorrect
@@ -54,29 +64,38 @@ public class EnemyBehavior : MonoBehaviour
             degreeToPlayer += 360;
         if (degreeFacing < -180 + degreeLineOfSight && degreeToPlayer > 180 - degreeLineOfSight)
             degreeToPlayer -= 360;
-        if (degreeToPlayer > degreeFacing - degreeLineOfSight && degreeToPlayer < degreeFacing + degreeLineOfSight && distanceFromPlayer < distanceLineOfSight)         {
+        if (degreeToPlayer > degreeFacing - degreeLineOfSight && degreeToPlayer < degreeFacing + degreeLineOfSight && distanceFromPlayer < distanceLineOfSight && distanceFromNextPoint < distanceFollowing ) {
             playerSpotted = true;
         }
         else
+        {
+            if (playerSpotted)
+                resetting = true;
             playerSpotted = false;
+        }
+           
 
         if (playerSpotted)
         {
-            Debug.Log("ALERT ALERT ALERT");
+            movementToNextPoint = new Vector2(Mathf.Cos(Mathf.Deg2Rad * degreeToPlayer), Mathf.Sin(Mathf.Deg2Rad * degreeToPlayer));
+            degreeFacing = Vector2.SignedAngle(transform.position, player.transform.position - transform.position);
+            transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
+            transform.position = new Vector3(transform.position.x + (movementToNextPoint.x * playerSpottedSpeed), transform.position.y + (movementToNextPoint.y * playerSpottedSpeed), 0);
+            //Debug.Log("ALERT ALERT ALERT");
             if (hasGun)
             {
 
             }
+
         }
 
-        if (points[0] != null)
+        else if (points[0] != null)
         {
             // 2 reasons to reset; done chasing player or touches wall
             // WORK ON THE SECOND ONE
             if (resetting)
             {
                 degreeFacing = 0;
-                transform.position = points[curPoint].position;
                 nextPoint = (curPoint + 1) % points.Length;
                 movementToNextPoint = new Vector2((points[nextPoint].position.x - transform.position.x) / timeBetweenPoints, (points[nextPoint].position.y - transform.position.y) / timeBetweenPoints);
                 degreeFacing = Vector2.SignedAngle(transform.position, points[nextPoint].position - transform.position);
@@ -102,6 +121,16 @@ public class EnemyBehavior : MonoBehaviour
                 transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
                 curPoint = nextPoint;
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("inside onCollision");
+        if (collision.gameObject.tag.Equals("Wall"))
+        {
+            Debug.Log("Hit the wall");
+            resetting = true;
         }
     }
 }
