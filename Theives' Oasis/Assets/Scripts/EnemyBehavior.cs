@@ -95,7 +95,6 @@ public class EnemyBehavior : MonoBehaviour
             // WORK ON THE SECOND ONE
             if (resetting)
             {
-                degreeFacing = 0;
                 nextPoint = (curPoint + 1) % points.Length;
                 movementToNextPoint = new Vector2((points[nextPoint].position.x - transform.position.x) / timeBetweenPoints, (points[nextPoint].position.y - transform.position.y) / timeBetweenPoints);
                 degreeFacing = Vector2.SignedAngle(transform.position, points[nextPoint].position - transform.position);
@@ -113,7 +112,6 @@ public class EnemyBehavior : MonoBehaviour
             else
             {
                 //factoring the angle it came into the point into its new rotation in some way
-                degreeFacing = 0;
                 transform.position = points[curPoint].position;
                 nextPoint = (curPoint + 1) % points.Length;
                 movementToNextPoint = new Vector2((points[nextPoint].position.x - transform.position.x) / timeBetweenPoints, (points[nextPoint].position.y - transform.position.y) / timeBetweenPoints);
