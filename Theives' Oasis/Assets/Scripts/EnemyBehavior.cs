@@ -41,7 +41,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             curPoint = 0;
             movementToNextPoint = new Vector2((points[curPoint].position.x - transform.position.x) / timeBetweenPoints, (points[curPoint].position.y - transform.position.y) / timeBetweenPoints);
-            degreeFacing = Vector3.SignedAngle(transform.position, points[curPoint].position - transform.position, Vector3.forward);
+            degreeFacing = Vector2.SignedAngle(transform.position, points[curPoint].position - transform.position);
             transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
 
         }
@@ -56,7 +56,7 @@ public class EnemyBehavior : MonoBehaviour
         degreeLineOfSight = playerSpotted ? playerSpottedDegreeLineOfSight : originalDegreeLineOfSight;
         distanceFromNextPoint = Mathf.Sqrt(Mathf.Pow(transform.position.x - points[curPoint].transform.position.x, 2) + Mathf.Pow(transform.position.y - points[curPoint].transform.position.y, 2));
         distanceFromPlayer = Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2) + Mathf.Pow(transform.position.y - player.transform.position.y, 2));
-        degreeToPlayer = Vector3.SignedAngle(transform.position, player.transform.position - transform.position, Vector3.forward);
+        degreeToPlayer = Vector2.SignedAngle(transform.position, player.transform.position - transform.position);
         //These 2 sections are incorrect
         //Fix angles and stuff
 
@@ -77,12 +77,8 @@ public class EnemyBehavior : MonoBehaviour
 
         if (playerSpotted)
         {
-            if (resetting)
-            {
-            }
-            else
-                movementToNextPoint = new Vector2(Mathf.Cos(Mathf.Deg2Rad * degreeToPlayer), Mathf.Sin(Mathf.Deg2Rad * degreeToPlayer));
-            degreeFacing = Vector3.SignedAngle(transform.position, player.transform.position - transform.position, Vector3.forward);
+            movementToNextPoint = new Vector2(Mathf.Cos(Mathf.Deg2Rad * degreeToPlayer), Mathf.Sin(Mathf.Deg2Rad * degreeToPlayer));
+            degreeFacing = Vector2.SignedAngle(transform.position, player.transform.position - transform.position);
             transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
             transform.position = new Vector3(transform.position.x + (movementToNextPoint.x * playerSpottedSpeed), transform.position.y + (movementToNextPoint.y * playerSpottedSpeed), 0);
             //Debug.Log("ALERT ALERT ALERT");
@@ -102,7 +98,7 @@ public class EnemyBehavior : MonoBehaviour
                 degreeFacing = 0;
                 nextPoint = (curPoint + 1) % points.Length;
                 movementToNextPoint = new Vector2((points[nextPoint].position.x - transform.position.x) / timeBetweenPoints, (points[nextPoint].position.y - transform.position.y) / timeBetweenPoints);
-                degreeFacing = Vector3.SignedAngle(transform.position, points[nextPoint].position - transform.position, Vector3.forward);
+                degreeFacing = Vector2.SignedAngle(transform.position, points[nextPoint].position - transform.position);
                 transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
                 curPoint = nextPoint;
                 resetting = false;
@@ -111,7 +107,7 @@ public class EnemyBehavior : MonoBehaviour
             {
                 //gameObject.transform.Translate(movementToNextPoint.x, movementToNextPoint.y, 0);
                 transform.position = new Vector3(transform.position.x + movementToNextPoint.x, transform.position.y + movementToNextPoint.y, 0);
-                degreeFacing = Vector3.SignedAngle(transform.position, points[nextPoint].position - transform.position, Vector3.forward);
+                degreeFacing = Vector2.SignedAngle(transform.position, points[nextPoint].position - transform.position);
                 transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
             }
             else
@@ -121,7 +117,7 @@ public class EnemyBehavior : MonoBehaviour
                 transform.position = points[curPoint].position;
                 nextPoint = (curPoint + 1) % points.Length;
                 movementToNextPoint = new Vector2((points[nextPoint].position.x - transform.position.x) / timeBetweenPoints, (points[nextPoint].position.y - transform.position.y) / timeBetweenPoints);
-                degreeFacing = Vector3.SignedAngle(transform.position, points[nextPoint].position - transform.position, Vector3.forward);
+                degreeFacing = Vector2.SignedAngle(transform.position, points[nextPoint].position - transform.position);
                 transform.rotation = Quaternion.AngleAxis(degreeFacing, Vector3.forward);
                 curPoint = nextPoint;
             }
