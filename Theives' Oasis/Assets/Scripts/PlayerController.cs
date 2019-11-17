@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
 
         
-        if (roll && Time.frameCount - rollStart < 10)
+        if (roll && Time.frameCount - rollStart < 8)
         {
             temp.x = 0;
 
@@ -137,6 +137,11 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = collision.gameObject.GetComponent<VentInfo>().telePoint;
         }
+    }
+
+    private IEnumerator Stamina()
+    {
+
     }
 
 }
