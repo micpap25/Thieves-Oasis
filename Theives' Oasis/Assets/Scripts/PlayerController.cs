@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,12 +11,15 @@ public class PlayerController : MonoBehaviour
     public float crouchSpeed;
     public float rollSpeed;
     public Vector3 temp;
-    public bool hasObjective;
     private float currentSpeed;
     private bool roll;
     private int rollStart;
     private char currdiV;
     private char currdiH;
+    private int objectives;
+    public bool dead;
+    public bool won;
+    public Text text;
     
     void Start()
     {
@@ -25,87 +29,91 @@ public class PlayerController : MonoBehaviour
         roll = false;
         currdiV = 'w';
         currdiH = 'n';
+        objectives = GameObject.FindGameObjectsWithTag("Objective").Length;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        
-        if (roll && Time.frameCount - rollStart < 10)
+        if (!dead && !won)
         {
-            temp.x = 0;
+            if (roll && Time.frameCount - rollStart < 10)
+            {
+                temp.x = 0;
 
-            if (currdiV == 'w')
-            {
-                transform.Translate(0, rollSpeed, 0);
-            }
-            else if (currdiV == 's')
-            {
-                transform.Translate(0, -rollSpeed, 0);
-            }
+                if (currdiV == 'w')
+                {
+                    transform.Translate(0, rollSpeed, 0);
+                }
+                else if (currdiV == 's')
+                {
+                    transform.Translate(0, -rollSpeed, 0);
+                }
 
-            if (currdiH == 'd')
-            {
-                transform.Translate(rollSpeed, 0, 0);
-            }
-            else if (currdiH == 'a')
-            {
-                transform.Translate(-rollSpeed, 0, 0);
-            }
+                if (currdiH == 'd')
+                {
+                    transform.Translate(rollSpeed, 0, 0);
+                }
+                else if (currdiH == 'a')
+                {
+                    transform.Translate(-rollSpeed, 0, 0);
+                }
 
+            }
+            else
+            {
+
+
+                roll = false;
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    currentSpeed = crouchSpeed;
+                }
+                else
+                {
+                    currentSpeed = moveSpeed;
+                }
+
+                if (Input.GetKeyDown(KeyCode.Space) && Time.frameCount - rollStart >= 60)
+                {
+                    rollStart = Time.frameCount;
+                    roll = true;
+                }
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    transform.Translate(0, currentSpeed, 0);
+                    currdiV = 'w';
+                }
+                else if (Input.GetKey(KeyCode.S))
+                {
+                    transform.Translate(0, -currentSpeed, 0);
+                    currdiV = 's';
+                }
+                else
+                {
+                    currdiV = 'n';
+                }
+
+                if (Input.GetKey(KeyCode.D))
+                {
+                    transform.Translate(currentSpeed, 0, 0);
+                    currdiH = 'd';
+                }
+                else if (Input.GetKey(KeyCode.A))
+                {
+                    transform.Translate(-currentSpeed, 0, 0);
+                    currdiH = 'a';
+                }
+                else
+                {
+                    currdiH = 'n';
+                }
+            }
+            // bar.transform.localScale = temp;
         }
-        else
-        {
 
-            
-            roll = false;
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                currentSpeed = crouchSpeed;
-            }
-            else
-            {
-                currentSpeed = moveSpeed;
-            }
 
-            if (Input.GetKeyDown(KeyCode.Space) && Time.frameCount - rollStart >= 60)
-            {
-                rollStart = Time.frameCount;
-                roll = true;
-            }
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                transform.Translate(0, currentSpeed, 0);
-                currdiV = 'w';
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                transform.Translate(0, -currentSpeed, 0);
-                currdiV = 's';
-            }
-            else
-            {
-                currdiV = 'n';
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                transform.Translate(currentSpeed, 0, 0);
-                currdiH = 'd';
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                transform.Translate(-currentSpeed, 0, 0);
-                currdiH = 'a';
-            }
-            else
-            {
-                currdiH = 'n';
-            }
-        }
-       // bar.transform.localScale = temp;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -114,22 +122,35 @@ public class PlayerController : MonoBehaviour
         {
             //Destroy(collision.gameObject);
             Debug.Log("Oof you're dead");
+            dead = true;
         }
         if (collision.gameObject.tag.Equals("Objective"))
         {
-            hasObjective = true;
+            objectives--;
             Destroy(collision.gameObject);
-            Debug.Log("You have the diamond! Now run!");
+            if (objectives == 0)
+                Debug.Log("You have the diamond! Now run!");
+            else
+                Debug.Log("You got a diamond!");
         }
 
         if (collision.gameObject.tag.Equals("Goal"))
         {
-            if (hasObjective)
+            if (objectives == 0)
+            {
+                won = true;
                 Debug.Log("You win!");
+            }
             else
                 Debug.Log("No! You need the diamond!");
         }
+        if (dead)
+            text.text = "You're Dead!";
+        if (won)
+            text.text = "You Win!";
+
     }
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {

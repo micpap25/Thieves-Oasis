@@ -108,18 +108,18 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3680038475965788593}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000000
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &3680038475965788558
 MonoBehaviour:
@@ -136,13 +136,17 @@ MonoBehaviour:
   degreeFacing: 0
   degreeLineOfSight: 20
   distanceLineOfSight: 10
+  distanceFollowing: 50
   hasGun: 0
   degreeToPlayer: 0
   distanceFromPlayer: 0
+  distanceFromNextPoint: 0
   player: {fileID: 0}
   tempAngle: 0
   playerSpotted: 0
-  playerSpottedSpeed: 0
+  playerSpottedSpeed: 0.25
+  playerSpottedDegreeLineOfSight: 50
+  playerSpottedDistanceLineOfSight: 20
   points:
   - {fileID: 0}
   - {fileID: 0}
@@ -152,6 +156,7 @@ MonoBehaviour:
   curPoint: 0
   nextPoint: 0
   movementToNextPoint: {x: 0, y: 0}
+  resetting: 0
 --- !u!1 &3680038476816090072
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +227,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 189860089
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6cf8056bae32bc044b660608d3516fab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

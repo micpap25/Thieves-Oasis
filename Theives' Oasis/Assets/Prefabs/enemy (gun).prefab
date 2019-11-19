@@ -72,5 +72,20 @@ PrefabInstance:
       propertyPath: hasGun
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3680038475965788558, guid: 93a117ce82045444c9dffebe747f3b66,
+        type: 3}
+      propertyPath: playerSpottedSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3680038475965788558, guid: 93a117ce82045444c9dffebe747f3b66,
+        type: 3}
+      propertyPath: playerSpottedDegreeLineOfSight
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3680038475965788558, guid: 93a117ce82045444c9dffebe747f3b66,
+        type: 3}
+      propertyPath: playerSpottedDistanceLineOfSight
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93a117ce82045444c9dffebe747f3b66, type: 3}

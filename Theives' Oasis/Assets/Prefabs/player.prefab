@@ -182,7 +182,9 @@ MonoBehaviour:
   rb: {fileID: 0}
   moveSpeed: 0.2
   crouchSpeed: 0.1
-  rollSpeed: 0
+  rollSpeed: 1
+  temp: {x: 0, y: 0, z: 0}
+  hasObjective: 0
 --- !u!58 &2600166970692563574
 CircleCollider2D:
   m_ObjectHideFlags: 0
