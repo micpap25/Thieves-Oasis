@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float crouchSpeed;
     public float rollSpeed;
-    public float rolltime;
+    public int rolltime;
     public Vector3 temp;
     private float currentSpeed;
     private bool roll;
@@ -31,8 +31,8 @@ public class PlayerController : MonoBehaviour
         roll = false;
         currdiV = 'w';
         currdiH = 'n';
-        Instantiate(stamBar, new Vector3(transform.position.x, transform.position.y - 5, 0), transform.rotation, transform);
-        stamBar.transform.localScale = new Vector3 (rolltime, stamBar.transform.localScale.y, stamBar.transform.localScale.z);
+        
+        //Instantiate(stamBar, new Vector3(transform.position.x, transform.position.y - 2, 0), transform.rotation, transform);
         objectives = GameObject.FindGameObjectsWithTag("Objective").Length;
     }
 
@@ -80,8 +80,10 @@ public class PlayerController : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space) && Time.frameCount - rollStart >= 60)
                 {
+
                     rollStart = Time.frameCount;
                     roll = true;
+                    StartCoroutine(Stamina());
                 }
 
                 if (Input.GetKey(KeyCode.W))
@@ -157,7 +159,44 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Stamina ()
     {
+        Vector3 org = stamBar.transform.localScale;
+        /*        for (int i = 0; i < rolltime; i++)
+                {
+                                Vector3 temp = stamBar.transform.localScale;
+                                temp.Set(temp.x - org.x / rolltime, temp.y, temp.z);
+                                stamBar.transform.localScale = temp;
 
+                }*/
+        while (Time.frameCount-rollStart <= rolltime)
+        {
+            Vector3 temp = stamBar.transform.localScale;
+
+            temp.Set(temp.x - org.x / rolltime, temp.y, temp.z);
+            stamBar.transform.localScale = temp;
+            yield return null;
+
+        }
+        /*        for (int i = 0; i < 60; i++)
+                {
+                                Vector3 temp = stamBar.transform.localScale;
+                                Debug.Log(temp.x);
+                                temp.Set(temp.x + org.x / 60, temp.y, temp.z);
+                                stamBar.transform.localScale = temp;
+
+                }*/
+
+
+        while (Time.frameCount-rollStart <= 60+rolltime)
+        {
+            Vector3 temp = stamBar.transform.localScale;
+
+            temp.Set(temp.x + org.x / 60, temp.y, temp.z);
+            stamBar.transform.localScale = temp;
+            yield return null;
+        }
+
+
+        stamBar.transform.localScale = new Vector3(org.x,org.y,org.z);
         yield return null;
     }
 
