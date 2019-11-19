@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float crouchSpeed;
     public float rollSpeed;
+    public float rolltime;
     public Vector3 temp;
     private float currentSpeed;
     private bool roll;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public bool dead;
     public bool won;
     public Text text;
+    public GameObject stamBar;
     
     void Start()
     {
@@ -29,6 +31,8 @@ public class PlayerController : MonoBehaviour
         roll = false;
         currdiV = 'w';
         currdiH = 'n';
+        Instantiate(stamBar, new Vector3(transform.position.x, transform.position.y - 5, 0), transform.rotation, transform);
+        stamBar.transform.localScale = new Vector3 (rolltime, stamBar.transform.localScale.y, stamBar.transform.localScale.z);
         objectives = GameObject.FindGameObjectsWithTag("Objective").Length;
     }
 
@@ -37,8 +41,9 @@ public class PlayerController : MonoBehaviour
     {
         if (!dead && !won)
         {
-            if (roll && Time.frameCount - rollStart < 10)
+            if (roll && Time.frameCount - rollStart < rolltime)
             {
+
                 temp.x = 0;
 
                 if (currdiV == 'w')
@@ -62,7 +67,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-
 
                 roll = false;
                 if (Input.GetKey(KeyCode.LeftShift))
@@ -151,6 +155,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private IEnumerator Stamina ()
+    {
+
+        yield return null;
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
