@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
                     currentSpeed = moveSpeed;
                 }
 
-                if (Input.GetKeyDown(KeyCode.Space) && Time.frameCount - rollStart >= 60)
+                if (Input.GetKeyDown(KeyCode.Space) && Time.frameCount - rollStart > 60)
                 {
 
                     rollStart = Time.frameCount;
@@ -169,6 +169,7 @@ public class PlayerController : MonoBehaviour
                 }*/
         while (Time.frameCount-rollStart <= rolltime)
         {
+        
             Vector3 temp = stamBar.transform.localScale;
 
             temp.Set(temp.x - org.x / rolltime, temp.y, temp.z);
@@ -186,11 +187,11 @@ public class PlayerController : MonoBehaviour
                 }*/
 
 
-        while (Time.frameCount-rollStart <= 60+rolltime)
+        while (Time.frameCount-rollStart <= 60)
         {
             Vector3 temp = stamBar.transform.localScale;
 
-            temp.Set(temp.x + org.x / 60, temp.y, temp.z);
+            temp.Set(temp.x + org.x / (60-rolltime), temp.y, temp.z);
             stamBar.transform.localScale = temp;
             yield return null;
         }
