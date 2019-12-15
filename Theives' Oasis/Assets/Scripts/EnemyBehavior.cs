@@ -34,11 +34,13 @@ public class EnemyBehavior : MonoBehaviour
 
     void Start()
     {
+        //Code for setting enemy's sight range
         originalDegreeLineOfSight = degreeLineOfSight;
         originalDistanceLineOfSight = distanceLineOfSight;
         player = GameObject.FindGameObjectWithTag("Player");
         if (points[0] != null)
         {
+            //Code for setting enemy's movement and direction facing.
             curPoint = 0;
             movementToNextPoint = new Vector2((points[curPoint].position.x - transform.position.x) / timeBetweenPoints, (points[curPoint].position.y - transform.position.y) / timeBetweenPoints);
             //degreeFacing = Vector2.SignedAngle(transform.position, points[curPoint].position - transform.position);
@@ -54,6 +56,7 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //Code that gets necessary values, like angles and distance from player and important sight/movement variables.
         distanceLineOfSight = playerSpotted ? playerSpottedDistanceLineOfSight : originalDistanceLineOfSight;
         degreeLineOfSight = playerSpotted ? playerSpottedDegreeLineOfSight : originalDegreeLineOfSight;
         distanceFromNextPoint = Mathf.Sqrt(Mathf.Pow(transform.position.x - points[curPoint].transform.position.x, 2) + Mathf.Pow(transform.position.y - points[curPoint].transform.position.y, 2));
@@ -63,6 +66,7 @@ public class EnemyBehavior : MonoBehaviour
         //These 2 sections are incorrect
         //Fix angles and stuff
 
+        //Checks if the player has been spotted and adjusts angles.
         if (degreeToPlayer < -180 + degreeLineOfSight && degreeFacing > 180 - degreeLineOfSight)
             degreeToPlayer += 360;
         if (degreeFacing < -180 + degreeLineOfSight && degreeToPlayer > 180 - degreeLineOfSight)
@@ -77,7 +81,7 @@ public class EnemyBehavior : MonoBehaviour
             playerSpotted = false;
         }
            
-
+        //Chase the player if the player has been spotted.
         if (playerSpotted)
         {
             movementToNextPoint = new Vector2(Mathf.Cos(Mathf.Deg2Rad * degreeToPlayer), Mathf.Sin(Mathf.Deg2Rad * degreeToPlayer));
@@ -97,6 +101,9 @@ public class EnemyBehavior : MonoBehaviour
         {
             // 2 reasons to reset; done chasing player or touches wall
             // WORK ON THE SECOND ONE
+
+            //"resetting" is triggered if the enemy hits a wall or stops seeing the player.
+            //gets the opponent going to the next point.
             if (resetting)
             {
                 nextPoint = (curPoint + 1) % points.Length;
@@ -107,6 +114,7 @@ public class EnemyBehavior : MonoBehaviour
                 curPoint = nextPoint;
                 resetting = false;
             }
+            //Movement to next point.
             if (!(this.transform.position.x > (points[curPoint].position.x) - .05 && this.transform.position.x < (points[curPoint].position.x) + .05 && this.transform.position.y > (points[curPoint].position.y) - .05 && this.transform.position.y < (points[curPoint].position.y) + .05))
             {
                 //gameObject.transform.Translate(movementToNextPoint.x, movementToNextPoint.y, 0);
@@ -115,6 +123,7 @@ public class EnemyBehavior : MonoBehaviour
                 degreeFacing = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(degreeFacing - 45, Vector3.forward);
             }
+            //Sets to next point 
             else
             {
                 //factoring the angle it came into the point into its new rotation in some way
@@ -131,6 +140,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Code for when the enemy hits a wall.
         //Debug.Log("inside onCollision");
         if (collision.gameObject.tag.Equals("Wall"))
         {

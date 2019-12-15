@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
         rb.freezeRotation = true;
         currentSpeed = moveSpeed;
         roll = false;
+        dead = false;
+        won = false;
         currdiV = 'w';
         currdiH = 'n';
         
@@ -39,8 +42,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //Do this if an end condition hasn't been reached.
         if (!dead && !won)
         {
+            //code for rolling
             if (roll && Time.frameCount - rollStart < rolltime)
             {
 
@@ -77,7 +82,7 @@ public class PlayerController : MonoBehaviour
                 {
                     currentSpeed = moveSpeed;
                 }
-
+                //code for movement
                 if (Input.GetKeyDown(KeyCode.Space) && Time.frameCount - rollStart > 60)
                 {
 
@@ -118,12 +123,20 @@ public class PlayerController : MonoBehaviour
             }
             // bar.transform.localScale = temp;
         }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
 
 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Code for hitting different things
         if (collision.gameObject.tag.Equals("Enemy"))
         {
             //Destroy(collision.gameObject);
@@ -159,6 +172,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Stamina ()
     {
+        //Thread to work on stamina bar
         Vector3 org = stamBar.transform.localScale;
         /*        for (int i = 0; i < rolltime; i++)
                 {
@@ -203,6 +217,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        //Code for using vents.
         if (collision.gameObject.tag.Equals("Vent") && Input.GetKeyDown(KeyCode.LeftControl))
         {
             transform.position = collision.gameObject.GetComponent<VentInfo>().telePoint;
