@@ -262,11 +262,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e548209f0630bc4b9fd3323148d1720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  moveSpeed: 0.2
-  crouchSpeed: 0.1
-  rollSpeed: 0.8
-  rolltime: 0
+  moveSpeed: 8
+  crouchSpeed: 4
+  rollSpeed: 32
+  rolltime: 1
   temp: {x: 0, y: 0, z: 0}
   dead: 0
   won: 0

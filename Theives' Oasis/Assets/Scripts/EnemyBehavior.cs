@@ -5,35 +5,35 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float degreeFacing;
+    private float degreeFacing;
     public float degreeLineOfSight;
     public float distanceLineOfSight;
     public float distanceFollowing;
     private float originalDegreeLineOfSight;
     private float originalDistanceLineOfSight;
     public bool hasGun;
-    [SerializeField] private float degreeToPlayer;
-    [SerializeField] private float distanceFromPlayer;
-    [SerializeField] private float distanceFromNextPoint;
-    [SerializeField] private GameObject player;
-    public float tempAngle;
-    public bool playerSpotted;
+    private float degreeToPlayer;
+    private float distanceFromPlayer;
+    private float distanceFromNextPoint;
+    private GameObject player;
+    private float tempAngle;
+    private bool playerSpotted;
     public float playerSpottedSpeed;
     public float playerSpottedDegreeLineOfSight;
     public float playerSpottedDistanceLineOfSight;
     public Transform[] points;
     public int timeBetweenPoints;
-    public int curPoint;
-    public int nextPoint;
-    public Vector2 movementToNextPoint;
-    public bool resetting;
-    
-    //degree facing has up-right as 0
-    //always adjust so they face the direction they're moving
-    // (unless they're drunk which they very well might be)
+    private int curPoint;
+    private int nextPoint;
+    private Vector2 movementToNextPoint;
+    private float lerpVar;
+    public float offset;
+    private bool resetting;
 
     void Start()
     {
+        //TODO: Set this from the start!
+        transform.position = points[points.Length-1].position;
         //Code for setting enemy's sight range
         originalDegreeLineOfSight = degreeLineOfSight;
         originalDistanceLineOfSight = distanceLineOfSight;
@@ -41,10 +41,11 @@ public class EnemyBehavior : MonoBehaviour
         if (points[0] != null)
         {
             //Code for setting enemy's movement and direction facing.
-            curPoint = 0;
-            movementToNextPoint = new Vector2((points[curPoint].position.x - transform.position.x) / timeBetweenPoints, (points[curPoint].position.y - transform.position.y) / timeBetweenPoints);
+            curPoint = points.Length - 1;
+            nextPoint = 0;
+            lerpVar = 0;
             //degreeFacing = Vector2.SignedAngle(transform.position, points[curPoint].position - transform.position);
-            Vector2 direction = (points[curPoint].position - transform.position).normalized;
+            Vector2 direction = (points[nextPoint].position - transform.position).normalized;
             degreeFacing = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(degreeFacing - 45, Vector3.forward);
 
@@ -59,7 +60,7 @@ public class EnemyBehavior : MonoBehaviour
         //Code that gets necessary values, like angles and distance from player and important sight/movement variables.
         distanceLineOfSight = playerSpotted ? playerSpottedDistanceLineOfSight : originalDistanceLineOfSight;
         degreeLineOfSight = playerSpotted ? playerSpottedDegreeLineOfSight : originalDegreeLineOfSight;
-        distanceFromNextPoint = Mathf.Sqrt(Mathf.Pow(transform.position.x - points[curPoint].transform.position.x, 2) + Mathf.Pow(transform.position.y - points[curPoint].transform.position.y, 2));
+        distanceFromNextPoint = Mathf.Sqrt(Mathf.Pow(transform.position.x - points[nextPoint].transform.position.x, 2) + Mathf.Pow(transform.position.y - points[nextPoint].transform.position.y, 2));
         distanceFromPlayer = Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2) + Mathf.Pow(transform.position.y - player.transform.position.y, 2));
         Vector2 direction = (player.transform.position - transform.position).normalized;
         degreeToPlayer = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -106,19 +107,20 @@ public class EnemyBehavior : MonoBehaviour
             //gets the opponent going to the next point.
             if (resetting)
             {
-                nextPoint = (curPoint + 1) % points.Length;
-                movementToNextPoint = new Vector2((points[nextPoint].position.x - transform.position.x) / timeBetweenPoints, (points[nextPoint].position.y - transform.position.y) / timeBetweenPoints);
+                nextPoint = (nextPoint + 1) % points.Length;
+                lerpVar = 0;
                 direction = (points[nextPoint].position - transform.position).normalized;
                 degreeFacing = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(degreeFacing - 45, Vector3.forward);
-                curPoint = nextPoint;
+                curPoint = (curPoint + 1) % points.Length;
                 resetting = false;
             }
             //Movement to next point.
-            if (!(this.transform.position.x > (points[curPoint].position.x) - .05 && this.transform.position.x < (points[curPoint].position.x) + .05 && this.transform.position.y > (points[curPoint].position.y) - .05 && this.transform.position.y < (points[curPoint].position.y) + .05))
+            if (!(this.transform.position.x > (points[nextPoint].position.x) - offset && this.transform.position.x < (points[nextPoint].position.x) + offset && this.transform.position.y > (points[nextPoint].position.y) - offset && this.transform.position.y < (points[nextPoint].position.y) + offset))
+            //if(!this.transform.position.Equals(points[nextPoint].position))
             {
-                //gameObject.transform.Translate(movementToNextPoint.x, movementToNextPoint.y, 0);
-                transform.position = new Vector2(transform.position.x + (movementToNextPoint.x * Time.deltaTime), transform.position.y + (movementToNextPoint.y * Time.deltaTime));
+                lerpVar += Time.deltaTime/timeBetweenPoints;
+                transform.position = Vector3.Lerp(points[curPoint].position, points[nextPoint].position, lerpVar);
                 direction = (points[nextPoint].position - transform.position).normalized;
                 degreeFacing = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(degreeFacing - 45, Vector3.forward);
@@ -126,14 +128,15 @@ public class EnemyBehavior : MonoBehaviour
             //Sets to next point 
             else
             {
+                Debug.Log("At next point!");
                 //factoring the angle it came into the point into its new rotation in some way
-                transform.position = points[curPoint].position;
-                nextPoint = (curPoint + 1) % points.Length;
-                movementToNextPoint = new Vector2((points[nextPoint].position.x - transform.position.x) / timeBetweenPoints, (points[nextPoint].position.y - transform.position.y) / timeBetweenPoints);
+                transform.position = points[nextPoint].position;
+                nextPoint = (nextPoint + 1) % points.Length;
+                lerpVar = 0;
                 direction = (points[nextPoint].position - transform.position).normalized;
                 degreeFacing = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(degreeFacing - 45, Vector3.forward);
-                curPoint = nextPoint;
+                curPoint = (curPoint + 1) % points.Length;
             }
         }
     }
@@ -144,7 +147,7 @@ public class EnemyBehavior : MonoBehaviour
         //Debug.Log("inside onCollision");
         if (collision.gameObject.tag.Equals("Wall"))
         {
-            Debug.Log("Hit the wall");
+            //Debug.Log("Hit the wall");
             resetting = true;
         }
     }

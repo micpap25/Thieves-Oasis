@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class VentInfo : MonoBehaviour
 {
-    public Vector2 telePoint;
+    public Transform pairedVent;
+    public Vector3 distanceFromPoint;
+
+    public Vector3 telePoint(){
+        return pairedVent.position + distanceFromPoint;
+    }
 }

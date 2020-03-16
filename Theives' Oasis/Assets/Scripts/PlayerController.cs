@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     public float moveSpeed;
     public float crouchSpeed;
     public float rollSpeed;
@@ -215,13 +215,13 @@ public class PlayerController : MonoBehaviour
         yield return null;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         //Code for using vents.
         Debug.Log("Collided!");
-        if (collision.gameObject.tag.Equals("Vent") && Input.GetKeyDown(KeyCode.LeftControl))
+        if (collision.gameObject.tag.Equals("Vent"))
         {
-            transform.position = collision.gameObject.GetComponent<VentInfo>().telePoint;
+            transform.position = collision.gameObject.GetComponent<VentInfo>().telePoint();
         }
     }
 

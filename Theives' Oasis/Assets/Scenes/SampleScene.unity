@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &250165943 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 166720810324985990, guid: a12b48ef120e8da4f97a82c62fd60549,
+    type: 3}
+  m_PrefabInstance: {fileID: 1954976716773706720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &487067794
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +204,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 487067794}
   m_CullTransparentMesh: 0
+--- !u!4 &567454715 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 166720810126462439, guid: a12b48ef120e8da4f97a82c62fd60549,
+    type: 3}
+  m_PrefabInstance: {fileID: 1954976716773706720}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &789131234 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 166720811013957790, guid: a12b48ef120e8da4f97a82c62fd60549,
+    type: 3}
+  m_PrefabInstance: {fileID: 1954976716773706720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1045391799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -277,6 +295,12 @@ PrefabInstance:
       objectReference: {fileID: 1517248699}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24f3d430ede868b43a10b5a6eaebed21, type: 3}
+--- !u!4 &1053026108 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 166720810585674377, guid: a12b48ef120e8da4f97a82c62fd60549,
+    type: 3}
+  m_PrefabInstance: {fileID: 1954976716773706720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1498156000
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +472,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1806547894 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 166720810430874359, guid: a12b48ef120e8da4f97a82c62fd60549,
+    type: 3}
+  m_PrefabInstance: {fileID: 1954976716773706720}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2039203558 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 166720810431521023, guid: a12b48ef120e8da4f97a82c62fd60549,
+    type: 3}
+  m_PrefabInstance: {fileID: 1954976716773706720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1954976716773706720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -510,15 +546,100 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1823623722260867058, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: pairedVent
+      value: 
+      objectReference: {fileID: 1806547894}
+    - target: {fileID: 1823623722260867058, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: distanceFromPoint.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823623722456801939, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: pairedVent
+      value: 
+      objectReference: {fileID: 1053026108}
+    - target: {fileID: 1823623722456801939, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: distanceFromPoint.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823623722564626658, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: pairedVent
+      value: 
+      objectReference: {fileID: 567454715}
+    - target: {fileID: 1823623722564626658, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: distanceFromPoint.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823623722565290730, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: pairedVent
+      value: 
+      objectReference: {fileID: 789131234}
+    - target: {fileID: 1823623722565290730, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: distanceFromPoint.y
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823623722683775132, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: pairedVent
+      value: 
+      objectReference: {fileID: 250165943}
+    - target: {fileID: 1823623722683775132, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: distanceFromPoint.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823623723114267275, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: pairedVent
+      value: 
+      objectReference: {fileID: 2039203558}
+    - target: {fileID: 1823623723114267275, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: distanceFromPoint.y
+      value: -4
+      objectReference: {fileID: 0}
     - target: {fileID: 1897655761257885294, guid: a12b48ef120e8da4f97a82c62fd60549,
         type: 3}
       propertyPath: m_Name
       value: Map2
       objectReference: {fileID: 0}
+    - target: {fileID: 1954976716695073013, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1954976716985477660, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1954976716985477660, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 2545576368597360908, guid: a12b48ef120e8da4f97a82c62fd60549,
         type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896772819298229552, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896772819298229552, guid: a12b48ef120e8da4f97a82c62fd60549,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4554510186990963502, guid: a12b48ef120e8da4f97a82c62fd60549,
         type: 3}

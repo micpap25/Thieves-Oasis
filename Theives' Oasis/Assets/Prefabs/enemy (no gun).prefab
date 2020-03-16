@@ -134,18 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d2dd2498b64304d95264fd6e295c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  degreeFacing: 0
   degreeLineOfSight: 20
   distanceLineOfSight: 10
   distanceFollowing: 50
   hasGun: 0
-  degreeToPlayer: 0
-  distanceFromPlayer: 0
-  distanceFromNextPoint: 0
-  player: {fileID: 0}
-  tempAngle: 0
-  playerSpotted: 0
-  playerSpottedSpeed: 0.25
+  playerSpottedSpeed: 10
   playerSpottedDegreeLineOfSight: 50
   playerSpottedDistanceLineOfSight: 20
   points:
@@ -153,11 +146,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  timeBetweenPoints: 100
-  curPoint: 0
-  nextPoint: 0
-  movementToNextPoint: {x: 0, y: 0}
-  resetting: 0
+  timeBetweenPoints: 4
+  offset: 0.0001
 --- !u!1 &3680038476816090072
 GameObject:
   m_ObjectHideFlags: 0
