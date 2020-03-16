@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //Do this if an end condition hasn't been reached.
         if (!dead && !won)
@@ -53,20 +53,20 @@ public class PlayerController : MonoBehaviour
 
                 if (currdiV == 'w')
                 {
-                    transform.Translate(0, rollSpeed, 0);
+                    transform.Translate(0, rollSpeed * Time.deltaTime, 0);
                 }
                 else if (currdiV == 's')
                 {
-                    transform.Translate(0, -rollSpeed, 0);
+                    transform.Translate(0, -rollSpeed * Time.deltaTime, 0);
                 }
 
                 if (currdiH == 'd')
                 {
-                    transform.Translate(rollSpeed, 0, 0);
+                    transform.Translate(rollSpeed * Time.deltaTime, 0, 0);
                 }
                 else if (currdiH == 'a')
                 {
-                    transform.Translate(-rollSpeed, 0, 0);
+                    transform.Translate(-rollSpeed * Time.deltaTime, 0, 0);
                 }
 
             }
@@ -93,12 +93,12 @@ public class PlayerController : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.W))
                 {
-                    transform.Translate(0, currentSpeed, 0);
+                    transform.Translate(0, currentSpeed * Time.deltaTime, 0);
                     currdiV = 'w';
                 }
                 else if (Input.GetKey(KeyCode.S))
                 {
-                    transform.Translate(0, -currentSpeed, 0);
+                    transform.Translate(0, -currentSpeed * Time.deltaTime, 0);
                     currdiV = 's';
                 }
                 else
@@ -108,12 +108,12 @@ public class PlayerController : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.D))
                 {
-                    transform.Translate(currentSpeed, 0, 0);
+                    transform.Translate(currentSpeed * Time.deltaTime, 0, 0);
                     currdiH = 'd';
                 }
                 else if (Input.GetKey(KeyCode.A))
                 {
-                    transform.Translate(-currentSpeed, 0, 0);
+                    transform.Translate(-currentSpeed * Time.deltaTime, 0, 0);
                     currdiH = 'a';
                 }
                 else
@@ -218,6 +218,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         //Code for using vents.
+        Debug.Log("Collided!");
         if (collision.gameObject.tag.Equals("Vent") && Input.GetKeyDown(KeyCode.LeftControl))
         {
             transform.position = collision.gameObject.GetComponent<VentInfo>().telePoint;

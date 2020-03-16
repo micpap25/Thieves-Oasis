@@ -49,6 +49,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -152,7 +153,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  timeBetweenPoints: 240
+  timeBetweenPoints: 100
   curPoint: 0
   nextPoint: 0
   movementToNextPoint: {x: 0, y: 0}
@@ -205,6 +206,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -247,11 +249,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3680038477497963111}
     m_Modifications:
-    - target: {fileID: 3312921306275222705, guid: edf3788a43663f04eb02ecab32961d9c,
-        type: 3}
-      propertyPath: m_Name
-      value: LineOfSight-removebg-preview
-      objectReference: {fileID: 0}
     - target: {fileID: 3312921306275222704, guid: edf3788a43663f04eb02ecab32961d9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -306,6 +303,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 135
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312921306275222705, guid: edf3788a43663f04eb02ecab32961d9c,
+        type: 3}
+      propertyPath: m_Name
+      value: LineOfSight-removebg-preview
       objectReference: {fileID: 0}
     - target: {fileID: 3312921306275222719, guid: edf3788a43663f04eb02ecab32961d9c,
         type: 3}

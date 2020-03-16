@@ -54,7 +54,7 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //Code that gets necessary values, like angles and distance from player and important sight/movement variables.
         distanceLineOfSight = playerSpotted ? playerSpottedDistanceLineOfSight : originalDistanceLineOfSight;
@@ -88,7 +88,7 @@ public class EnemyBehavior : MonoBehaviour
             direction = (player.transform.position - transform.position).normalized;
             degreeFacing = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(degreeFacing - 45, Vector3.forward);
-            transform.position = new Vector2(transform.position.x + (movementToNextPoint.x * playerSpottedSpeed), transform.position.y + (movementToNextPoint.y * playerSpottedSpeed));
+            transform.position = new Vector2(transform.position.x + (movementToNextPoint.x * playerSpottedSpeed * Time.deltaTime), transform.position.y + (movementToNextPoint.y * playerSpottedSpeed * Time.deltaTime));
             //Debug.Log("ALERT ALERT ALERT");
             if (hasGun)
             {
@@ -118,7 +118,7 @@ public class EnemyBehavior : MonoBehaviour
             if (!(this.transform.position.x > (points[curPoint].position.x) - .05 && this.transform.position.x < (points[curPoint].position.x) + .05 && this.transform.position.y > (points[curPoint].position.y) - .05 && this.transform.position.y < (points[curPoint].position.y) + .05))
             {
                 //gameObject.transform.Translate(movementToNextPoint.x, movementToNextPoint.y, 0);
-                transform.position = new Vector2(transform.position.x + movementToNextPoint.x, transform.position.y + movementToNextPoint.y);
+                transform.position = new Vector2(transform.position.x + (movementToNextPoint.x * Time.deltaTime), transform.position.y + (movementToNextPoint.y * Time.deltaTime));
                 direction = (points[nextPoint].position - transform.position).normalized;
                 degreeFacing = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(degreeFacing - 45, Vector3.forward);
