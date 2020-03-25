@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
+        Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
         currentSpeed = moveSpeed;
@@ -215,11 +216,11 @@ public class PlayerController : MonoBehaviour
         yield return null;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         //Code for using vents.
         Debug.Log("Collided!");
-        if (collision.gameObject.tag.Equals("Vent"))
+        if (collision.gameObject.tag.Equals("Vent") && Input.GetKeyDown(KeyCode.Q))
         {
             transform.position = collision.gameObject.GetComponent<VentInfo>().telePoint();
         }
