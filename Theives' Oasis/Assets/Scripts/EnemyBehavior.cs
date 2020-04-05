@@ -72,9 +72,16 @@ public class EnemyBehavior : MonoBehaviour
             degreeToPlayer += 360;
         if (degreeFacing < -180 + degreeLineOfSight && degreeToPlayer > 180 - degreeLineOfSight)
             degreeToPlayer -= 360;
+//        if(Raycast(transform.position,Vector3(Mathf.cos(degreeToPlayer),Mathf.sin(degreeToPlayer),0), distanceFromPlayer,int layerMask = DefaultRaycastLayers, QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.UseGlobal))
         if (degreeToPlayer > degreeFacing - degreeLineOfSight && degreeToPlayer < degreeFacing + degreeLineOfSight && distanceFromPlayer < distanceLineOfSight && distanceFromNextPoint < distanceFollowing ) {
             playerSpotted = true;
         }
+        /*int environment = LayerMask.GetMask("Environment");
+
+if (!Physics.Linecast(shooter.transform.position, target.transform.position, environment)) {
+// Fire!
+
+}*/
         else
         {
             if (playerSpotted)
